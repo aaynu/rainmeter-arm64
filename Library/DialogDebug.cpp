@@ -2667,7 +2667,10 @@ void DialogDebug::TabPlugins::Initialize()
 				continue;
 			}
 
-#ifdef _WIN64
+#if defined(_M_ARM64)
+			// A native ARM64 process can only load ARM64 (or ARM64X) DLLs, never x64 ones.
+			const WORD rainmeterBitness = IMAGE_FILE_MACHINE_ARM64;
+#elif defined(_WIN64)
 			const WORD rainmeterBitness = IMAGE_FILE_MACHINE_AMD64;
 #elif _WIN32
 			const WORD rainmeterBitness = IMAGE_FILE_MACHINE_I386;

@@ -19,7 +19,9 @@
 #define MAX_LINE_LENGTH 4096
 
 #define APPNAME L"Rainmeter"
-#ifdef _WIN64
+#if defined(_M_ARM64)
+#define APPBITS L"ARM64"
+#elif defined(_WIN64)
 #define APPBITS L"64-bit"
 #else
 #define APPBITS L"32-bit"

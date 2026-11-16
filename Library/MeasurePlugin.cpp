@@ -126,6 +126,16 @@ void MeasurePlugin::ReadOptions(ConfigParser::OptionReader& reader)
 		if (!m_Plugin)
 		{
 			const auto lastError = GetLastError();
+#if defined(_M_ARM64)
+			if (lastError == ERROR_BAD_EXE_FORMAT)
+			{
+				// Unlike the x64 and ARM64EC builds, a native ARM64 process cannot load x64 DLLs.
+				LogErrorF(
+					this, L"Plugin: \"%s\" is not an ARM64 DLL and cannot be loaded by the native ARM64 build of Rainmeter",
+					pluginName.c_str());
+				return;
+			}
+#endif
 			LogErrorF(
 				this, L"Plugin: Unable to %s \"%s\" (error %ld)",
 				lastError == ERROR_MOD_NOT_FOUND ? L"find DLL for" : L"load",

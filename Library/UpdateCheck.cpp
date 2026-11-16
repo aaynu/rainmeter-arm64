@@ -61,6 +61,12 @@ Updater& Updater::GetInstance()
 
 void Updater::CheckForUpdates(bool download)
 {
+#if defined(_M_ARM64)
+	// The official installer carries x64 binaries only, so it must never be run over a native
+	// ARM64 build. The check itself still runs so that a new version is announced.
+	download = false;
+#endif
+
 	m_DownloadInstaller = download;
 
 	if (!m_FetchStatusTask && !m_FetchInstallerTask)
@@ -71,6 +77,12 @@ void Updater::CheckForUpdates(bool download)
 
 bool Updater::InstallUpdate()
 {
+#if defined(_M_ARM64)
+	// See CheckForUpdates(). An installer that an x64 build sharing these settings downloaded is
+	// left alone for that build to run.
+	return false;
+#endif
+
 	auto& rainmeter = GetRainmeter();
 	const std::wstring& dataFile = rainmeter.GetDataFile();
 	const std::wstring path = rainmeter.GetSettingsPath() + L"Updates\\";
@@ -88,7 +100,7 @@ bool Updater::InstallUpdate()
 		const std::wstring fullPath = path + fileName;
 		const std::wstring& installPath = rainmeter.GetPath();
 		const std::wstring isPortable = _wcsicmp(installPath.c_str(), rainmeter.GetSettingsPath().c_str()) == 0 ? L"1" : L"0";
-		const std::wstring is64Bit = wcscmp(APPBITS, L"64-bit") == 0 ? L"64" : L"32";
+		const std::wstring is64Bit = wcscmp(APPBITS, L"32-bit") == 0 ? L"32" : L"64";
 		const std::wstring args = fmt::format(L"/S /RESTART=1 /PORTABLE={} /VERSION={} /D={}", isPortable, is64Bit, installPath);
 
 		SHELLEXECUTEINFO info = { sizeof(info) };

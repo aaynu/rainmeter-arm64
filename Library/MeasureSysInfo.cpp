@@ -465,7 +465,9 @@ void MeasureSysInfo::UpdateValue()
 			}
 			else // OS_BITS
 			{
+				// ARM64 is what a native ARM64 build of Rainmeter gets on Windows on ARM.
 				m_Value = (si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_AMD64 ||
+					si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_ARM64 ||
 					si.wProcessorArchitecture == PROCESSOR_ARCHITECTURE_IA64) ? 64.0 : 32.0;
 			}
 		}

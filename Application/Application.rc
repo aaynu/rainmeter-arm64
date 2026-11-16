@@ -33,7 +33,9 @@ VS_VERSION_INFO VERSIONINFO
             VALUE "CompanyName", "Rainmeter"
             VALUE "ProductName", "Rainmeter"
             VALUE "FileDescription", "Rainmeter"
-#ifdef _WIN64
+#if defined(_M_ARM64)
+            VALUE "ProductVersion", STRPRODUCTVER " (ARM64)"
+#elif defined(_WIN64)
             VALUE "ProductVersion", STRPRODUCTVER " (64-bit)"
 #else
             VALUE "ProductVersion", STRPRODUCTVER " (32-bit)"
