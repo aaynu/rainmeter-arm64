@@ -10,6 +10,10 @@
       <Configuration>Debug</Configuration>
       <Platform>ARM64EC</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
@@ -18,10 +22,19 @@
       <Configuration>Release</Configuration>
       <Platform>ARM64EC</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
 
   <PropertyGroup Label="Configuration">
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v145</PlatformToolset>
+  </PropertyGroup>
+
+  <!-- Native ARM64. Unlike ARM64EC, these binaries contain no x64 code and cannot load x64 DLLs. -->
+  <PropertyGroup Condition="'$(Platform)'=='ARM64'" Label="Configuration">
+    <PlatformTarget>ARM64</PlatformTarget>
   </PropertyGroup>
 </Project>

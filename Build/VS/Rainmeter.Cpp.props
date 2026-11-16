@@ -15,6 +15,7 @@
     <!-- This is overridden by Build.ps1 during full build. -->
     <RmOutDirRoot Condition=" '$(Platform)' == 'x64' ">$(SolutionDir)BuildOut\$(Configuration)64\</RmOutDirRoot>
     <RmOutDirRoot Condition=" '$(Platform)' == 'ARM64EC' ">$(SolutionDir)BuildOut\$(Configuration)ARM\</RmOutDirRoot>
+    <RmOutDirRoot Condition=" '$(Platform)' == 'ARM64' ">$(SolutionDir)BuildOut\$(Configuration)ARM64\</RmOutDirRoot>
 
     <OutDir>$(RmOutDirRoot)</OutDir>
     <IntDir>$(OutDir)Obj\$(ProjectName)\</IntDir>
@@ -33,6 +34,7 @@
     <!-- Non-static projects must delayload CppUnitTestFramework.dll to avoid the "module not found"
          errors (since CppUnitTestFramework.dll is available only when running tests). -->
     <DelayLoadTestDLL>Microsoft.VisualStudio.TestTools.CppUnitTestFramework.x64.dll</DelayLoadTestDLL>
+    <DelayLoadTestDLL Condition="'$(Platform)'=='ARM64'">Microsoft.VisualStudio.TestTools.CppUnitTestFramework.arm64.dll</DelayLoadTestDLL>
     <DelayLoadTestDLL Condition="'$(ConfigurationType)'=='StaticLibrary'"></DelayLoadTestDLL>
     <DelayLoadTestDLL Condition="'$(ExcludeTests)'=='true'"></DelayLoadTestDLL>
   </PropertyGroup>
@@ -129,6 +131,13 @@
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64EC'">
     <ResourceCompile>
       <PreprocessorDefinitions>_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+
+  <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64'">
+    <ResourceCompile>
+      <!-- rc.exe predefines neither, so mirror what the compiler defines for native ARM64. -->
+      <PreprocessorDefinitions>_WIN64;_M_ARM64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
 </Project>
