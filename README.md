@@ -15,3 +15,11 @@
 ### Privacy policy
 
 Rainmeter transmits no data to other networked systems by default. Skins installed by the user may transmit data — for example, to fetch weather or RSS feeds — but only as configured by that skin.
+
+### ARM64 Port Credits
+
+This native Windows on ARM (ARM64) port was collaboratively developed by:
+
+* **Aayush** ([@aaynu](https://github.com/aaynu)) — Project lead, direction, and orchestration
+* **Claude** (Anthropic) — ARM64 port architecture, C++ source adaptation, and initial implementation
+* **Gemini** (Google DeepMind) — Tooling, CI/CD integration, replication, and verification
