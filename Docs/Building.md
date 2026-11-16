@@ -20,6 +20,20 @@ Install the required tools:
 Then open `Rainmeter.sln` to build and run Rainmeter.
 
 
+### Building for Windows on ARM
+
+Besides `x64`, the solution has two platforms for ARM64 devices. Both need the C++ ARM64/ARM64EC build tools component of Visual Studio.
+
+- `ARM64EC` is ARM64 code that stays compatible with x64, so it can still load the x64 plugin DLLs that skins come with.
+- `ARM64` contains no x64 code at all. It cannot load x64 DLLs, so only plugins that are themselves compiled for ARM64 work with it.
+
+To build the native `ARM64` version, run the following in a Developer PowerShell for Visual Studio:
+
+    MSBuild.exe Rainmeter.sln /p:Configuration=Release /p:Platform=ARM64 /m
+
+The result is written to `BuildOut\ReleaseARM64`. The `build-arm64` GitHub Actions workflow runs the same build on every push to the default branch, or on demand, and uploads it as `Rainmeter-ARM64-Portable.zip`.
+
+
 ### Building the installer
 
 Run the following PowerShell command, replacing `1.2.3.4` with the release version:
